@@ -23,6 +23,5 @@
   "homepage": "https://github.com/Pentec/pims-neuralnetwork",
   "dependencies": {
     "synaptic": "^1.0.1"
-  },
-  "private": true
+  }
 }

@@ -1,21 +1,27 @@
-var synaptic = require('synaptic');
-var Architect = synaptic.Architect;
-var train = require('./mockFiles/test.json');
+var fileName, trainingObject, fs, perceptron;
 
-var perceptron = new Architect.Perceptron(2,3,1);
+function AI(JSONFile){
+    var Architect = require('synaptic').Architect;
+    fs = require('fs');
+    fileName = JSONFile;
+    trainingObject = JSON.parse(fs.readFileSync(fileName));
+    perceptron = new Architect.Perceptron(2,3,1);
+    console.log("Neural Network Created");
+}
 
 /** Function activates using the form inputs and determines the length of admission for the patient
  *  @param input
  * */
-exports.activate = function(input){
+ AI.prototype.activate = function(input){
     return perceptron.activate(input);
 };
 
 /**
  * Trains the neural network on the newer data.
  */
-exports.train = function(){
-    perceptron.trainer.train(train);
+AI.prototype.train = function(){
+    perceptron.trainer.train(trainingObject);
+    console.log("Training occurred");
 };
 
 /**
@@ -23,10 +29,22 @@ exports.train = function(){
  * @param input
  */
 //TODO Updating JSON file via javascript
-exports.addTrainer = function(input){
-    if(train.length>10){
-        train[train.length-1]=input;
+AI.prototype.addTrainer = function(input){
+    if(trainingObject.length>10){
+        trainingObject.push(input);
+        fs.writeFile(fileName, JSON.stringify(trainingObject), function(err){
+            if(err) return console.log(err);
+            console.log(JSON.stringify(file));
+            console.log("Writing to " + fileName);
+        })
     }else{
-        train[train.length]=input;
+        trainingObject.push(input);
+        fs.writeFile(fileName, JSON.stringify(trainingObject), function(err){
+            if(err) return console.log(err);
+            console.log(JSON.stringify(trainingObject));
+            console.log("Writing to " + fileName);
+        })
     }
 };
+
+module.exports = AI;

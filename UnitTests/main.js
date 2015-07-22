@@ -1,4 +1,4 @@
 var AI = require("../neuralnetwork");
-
-AI.addTrainer([0,1]);
+var ai = new AI('./test.json');
+ai.train();
 
